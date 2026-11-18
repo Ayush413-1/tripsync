@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ExpenseReposiotry extends JpaRepository<Expense, Long> {
-    List<Expense> findByTripOrderByExpenseDateDesc(Long TripId);
-    Optional<Expense> findByIdAndTripid(Long id, Long TripId);
-    List<Expense> findByPaidByIdAndTripId(Long userId, Long tripId);
+    List<Expense> findByTrip_IdOrderByExpenseDateDesc(Long tripId);
+
+    Optional<Expense> findByIdAndTrip_Id(Long id, Long tripId);
+
+    List<Expense> findByPaidBy_IdAndTrip_Id(Long userId, Long tripId);
 }

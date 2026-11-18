@@ -7,8 +7,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TripMemberRepository extends JpaRepository<TripMember, Long> {
-    List<TripMember> findByTripId(Long id);
-    List<TripMember> findByUserId(Long userId);
-    Optional<TripMember> findByTripAndUserId(Long tripId, Long userId);
-    boolean existsByTripIdAndUserId(Long tripId,Long userId);
+    List<TripMember> findByTrip_Id(Long tripId);
+
+    List<TripMember> findByUser_Id(Long userId);
+
+    Optional<TripMember> findByTrip_IdAndUser_Id(
+            Long tripId, Long userId
+    );
+
+    boolean existsByTrip_IdAndUser_Id(
+            Long tripId, Long userId
+    );
 }
