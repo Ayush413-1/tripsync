@@ -4,6 +4,8 @@ import com.tripsync.tripsync.invitation.dto.InvitationResponse;
 import com.tripsync.tripsync.invitation.dto.InviteMemberRequest;
 import com.tripsync.tripsync.invitation.entity.Invitationstatus;
 import com.tripsync.tripsync.invitation.repository.TripInvitationRepository;
+import com.tripsync.tripsync.notification.entity.NotificationType;
+import com.tripsync.tripsync.notification.service.TripNotificationService;
 import com.tripsync.tripsync.trip.entity.Trip;
 import com.tripsync.tripsync.invitation.entity.TripInvitation;
 import com.tripsync.tripsync.trip.entity.TripMember;
@@ -36,7 +38,7 @@ public class TripInvitationService {
     private final UserRepository userRepository;
     private final InvitationEmailService emailService;
 
-//    private final TripNotificationService notificationService;
+    private final TripNotificationService notificationService;
 
 
     @Value("${app.invitation.expiration-hours:48}")
@@ -79,13 +81,13 @@ public class TripInvitationService {
         invitation.setTokenHash(hashToken(rawToken));
         TripInvitation savedInvitation = tripInvitationRepository.save(invitation);
         emailService.sendInvitation(inviteeEmail,trip.getTitle(),rawToken);
-//        if (exstingUser!=null){
-//            notificationService.createNotification(exstingUser,
-//                    trip,
-//                    NotificationType.INVITATION_RECEIVED,
-//                    "New trip invitation",
-//                    "You have been invited to join the trip: "+trip.getTitle());
-//        }
+        if (exstingUser!=null){
+            notificationService.createNotification(exstingUser,
+                    trip,
+                    NotificationType.INVITATION_RECEIVED,
+                    "New trip invitation",
+                    "You have been invited to join the trip: "+trip.getTitle());
+        }
         return toResponse(savedInvitation);
     }
 
@@ -106,13 +108,13 @@ public class TripInvitationService {
         tripMemberRepository.save(member);
         invitation.setStatus(Invitationstatus.ACCEPTED);
         TripInvitation savedInvitation= tripInvitationRepository.save(invitation);
-//        notificationService.createNotification(
-//                trip.getOwner(),
-//                trip,
-//                NotificationType.INVITATION_ACCEPTED,
-//                "Invitation accepted",
-//                user.getFullName() + " accepted the invitation for trip: "+trip.getTitle()
-//        );
+        notificationService.createNotification(
+                trip.getOwner(),
+                trip,
+                NotificationType.INVITATION_ACCEPTED,
+                "Invitation accepted",
+                user.getFullName() + " accepted the invitation for trip: "+trip.getTitle()
+        );
         return toResponse(savedInvitation);
     }
 
@@ -124,13 +126,13 @@ public class TripInvitationService {
         invitation.setStatus(Invitationstatus.REJECTED);
         Trip trip = invitation.getTrip();
         TripInvitation savedInvitation= tripInvitationRepository.save(invitation);
-//        notificationService.createNotification(
-//                trip.getOwner(),
-//                trip,
-//                NotificationType.INVITATION_REJECTED,
-//                "Invitation declined",
-//                user.getFullName() + " declined the invitation for trip: "+trip.getTitle()
-//        );
+        notificationService.createNotification(
+                trip.getOwner(),
+                trip,
+                NotificationType.INVITATION_REJECTED,
+                "Invitation declined",
+                user.getFullName() + " declined the invitation for trip: "+trip.getTitle()
+        );
         return toResponse(savedInvitation);
     }
 
