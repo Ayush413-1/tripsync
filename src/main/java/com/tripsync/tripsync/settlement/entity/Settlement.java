@@ -1,5 +1,6 @@
 package com.tripsync.tripsync.settlement.entity;
 
+import com.tripsync.tripsync.common.entity.BaseEntity;
 import com.tripsync.tripsync.trip.entity.Trip;
 import com.tripsync.tripsync.user.entity.User;
 import jakarta.persistence.*;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "settlements")
-public class Settlement {
+public class Settlement extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,6 @@
 package com.tripsync.tripsync.invitation.entity;
 
+import com.tripsync.tripsync.common.entity.BaseEntity;
 import com.tripsync.tripsync.trip.entity.Trip;
 import com.tripsync.tripsync.trip.entity.TripMemberRole;
 import com.tripsync.tripsync.user.entity.User;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Table(name = "invitations")
-public class Tripinvitation {
+public class TripInvitation extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +26,7 @@ public class Tripinvitation {
     @JoinColumn(name = "trip_id", nullable = false)
     private Trip trip;
 
-    @Column(name = "token_hash", nullable = false, unique = true)
+    @Column(name="token_hash",unique = true,length = 64)
     private String tokenHash;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

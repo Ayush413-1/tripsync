@@ -1,7 +1,7 @@
 
 package com.tripsync.tripsync.invitation.repository;
 
-import com.tripsync.tripsync.invitation.entity.Tripinvitation;
+import com.tripsync.tripsync.invitation.entity.TripInvitation;
 import com.tripsync.tripsync.invitation.entity.Invitationstatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -9,16 +9,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TripInvitationRepository
-        extends JpaRepository<Tripinvitation, Long> {
+        extends JpaRepository<TripInvitation, Long> {
 
-    List<Tripinvitation> findByInviteeEmailIgnoreCase(String inviteeEmail);
+    List<TripInvitation> findByInviteeEmailIgnoreCase(String inviteeEmail);
 
-    List<Tripinvitation> findByTripId(Long tripId);
+    List<TripInvitation> findByTripId(Long tripId);
 
-    Optional<Tripinvitation> findByIdAndInviteeEmailIgnoreCase(
+    Optional<TripInvitation> findByIdAndInviteeEmailIgnoreCase(
             Long id, String inviteeEmail);
 
-    Optional<Tripinvitation> findByTokenHash(String tokenHash);
+    Optional<TripInvitation> findByTokenHash(String tokenHash);
 
     boolean existsByTrip_IdAndInviteeEmailIgnoreCaseAndStatus(
             Long tripId, String inviteeEmail, Invitationstatus status);

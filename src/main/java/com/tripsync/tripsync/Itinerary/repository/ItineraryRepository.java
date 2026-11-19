@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public interface itineraryRepository extends JpaRepository<Itinerary, Long> {
+public interface ItineraryRepository extends JpaRepository<Itinerary, Long> {
 
     List<Itinerary> findByTrip_IdOrderByItineraryDateAsc(Long tripId);
 
@@ -20,4 +20,5 @@ public interface itineraryRepository extends JpaRepository<Itinerary, Long> {
 
     boolean existsByTrip_IdAndItineraryDateAndIdNot(
             Long tripId, LocalDate itineraryDate, Long id);
+
 }

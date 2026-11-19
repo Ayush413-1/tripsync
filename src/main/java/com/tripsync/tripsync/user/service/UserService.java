@@ -127,7 +127,8 @@ public class UserService {
     public UserResponse updateUser(Long id, UpdateUserRequest request){
         User user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
 
-        String email = request.email();
+        String email = request.email().trim().toLowerCase();
+        String fullName = request.fullName().trim();
 
         userRepository.findByEmail(email)
                 .filter(existingUser -> !existingUser.getId().equals(user.getId()))
@@ -137,7 +138,7 @@ public class UserService {
                     );
                 });
 
-        user.setFullName(request.fullname().trim());
+        user.setFullName(request.fullName().trim());
         user.setEmail(email);
         User savedUSer = userRepository.save(user);
 
