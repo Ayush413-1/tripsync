@@ -38,12 +38,16 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .userDetailsService(customUserDetailService)
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**",
-                        "/error",
-                        "/v3/api-docs/**",
-                        "/swagger-ui/**",
-                        "/swagger-ui.html").permitAll()
-                .anyRequest().authenticated())
+                        .requestMatchers(
+                                "/",
+                                "/error",
+                                "/auth/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
                 .addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class
                 );
